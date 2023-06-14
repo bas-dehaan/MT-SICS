@@ -21,7 +21,7 @@ import (
 func Connect(port string) (io.ReadWriteCloser, error) {
 	options := serial.OpenOptions{
 		PortName:        port,
-		BaudRate:        115200,
+		BaudRate:        9600,
 		DataBits:        8,
 		StopBits:        1,
 		MinimumReadSize: 4,
