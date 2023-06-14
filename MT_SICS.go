@@ -173,7 +173,7 @@ func ShowWeight(connection io.ReadWriteCloser) error {
 	return err
 }
 
-// GetUnit retrives the unit currently used by the scale.
+// GetUnit retrieves the unit currently used by the scale.
 // There are 3 channels on the scale:
 //   - 0: Host unit, used on the MT-SICS connection
 //   - 1: Display unit, used on the scale display
@@ -238,12 +238,6 @@ func PowerOff(connection io.ReadWriteCloser) error {
 	return err
 }
 
-// Measurement represents a measurement on the scale.
-type Measurement struct {
-	Weight float64
-	Unit   string
-}
-
 // Weight retrieves the weight from the scale.
 //
 // Inputs:
@@ -282,7 +276,7 @@ func Weight(connection io.ReadWriteCloser) (Measurement, error) {
 //     Note: timeout and numMeasurements cannot both be infinite (0)
 //
 // Outputs:
-//   - []measurements: the weights and units of the measurements
+//   - []Measurement: the weights and units of the measurements
 //   - error: see DirectCommand()
 func WeightOnKey(connection io.ReadWriteCloser, numMeasurements int, timeout time.Duration) ([]Measurement, error) {
 	if timeout == 0 && numMeasurements == 0 {
@@ -436,4 +430,10 @@ func Zero(connection io.ReadWriteCloser) error {
 	regex := regexp.MustCompile(`Z A`)
 	_, err := DirectCommand(connection, "Z", regex)
 	return err
+}
+
+// Measurement represents a measurement on the scale.
+type Measurement struct {
+	Weight float64
+	Unit   string
 }
