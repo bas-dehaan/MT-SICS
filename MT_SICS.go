@@ -11,6 +11,7 @@ import (
 )
 
 // Connect to the scale via the given port
+// Alias for ConnectBaud(port, 9600)
 //
 // Inputs:
 //   - port: the port to connect to, e.g. COM1
@@ -19,9 +20,22 @@ import (
 //   - io.ReadWriteCloser: the connection to the scale
 //   - error
 func Connect(port string) (io.ReadWriteCloser, error) {
+	return ConnectBaud(port, 9600)
+}
+
+// ConnectBaud to the scale via the given port and baudrate
+//
+// Inputs:
+//   - port: the port to connect to, e.g. COM1
+//   - baudrate: the baudrate to use, e.g. 128000
+//
+// Outputs:
+//   - io.ReadWriteCloser: the connection to the scale
+//   - error
+func ConnectBaud(port string, baudrate uint) (io.ReadWriteCloser, error) {
 	options := serial.OpenOptions{
 		PortName:        port,
-		BaudRate:        9600,
+		BaudRate:        baudrate,
 		DataBits:        8,
 		StopBits:        1,
 		MinimumReadSize: 4,
